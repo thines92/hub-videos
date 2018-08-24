@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		.video-list {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+	</style>
+</head>
+  <body>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+
+    <div class="video-list">
+		<div class="video" data-videoId="lT40mWd_-7U">
+			<img src="https://via.placeholder.com/300x300" alt="">
+		</div>
+		<div class="video" data-videoId='mxPIAABeccw'>
+			<img src="https://via.placeholder.com/300x300" alt="">
+		</div>
+		<div class="video" data-videoId='q_EMZjBgx7s'>
+			<img src="https://via.placeholder.com/300x300" alt="">
+		</div>
+		<div class="video" data-videoId='IdwH57G6SoE'>
+			<img src="https://via.placeholder.com/300x300" alt="">
+		</div>
+		<div class="video" data-videoId='jk4jSYcGkC4'>
+			<img src="https://via.placeholder.com/300x300" alt="">
+		</div>
+    </div>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'OhEnIp6beYI',
+          events: {
+            'onReady': onPlayerReady,
+            // 'onStateChange': loadByURL
+        	}
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+      var video1Url = "https://www.youtube.com/v/v4nT8Tw4Y-8?version=3";
+
+      var video2Url = "https://www.youtube.com/v/mxPIAABeccw?version=3"
+
+      function createUrl(id) {
+      	url = "https://www.youtube.com/v/" + id + "?version=3";
+      	return url;
+      }
+
+      function loadVideo(videoId) {
+      	player.loadVideoByUrl(createUrl(videoId));
+      }
+
+      $(".video").click(function() {
+      	videoId = this.dataset.videoid;
+      	loadVideo(videoId);
+      });
+      </script>
+  </body>
+</html>
