@@ -3,10 +3,11 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
-    .video-list {
+    #video-list {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       flex-wrap: wrap;
+      text-align: center;
     }
   </style>
 </head>
@@ -14,8 +15,8 @@
     <!-- The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
-    <div class="video-list">
-      <div class="video" data-videoId="lT40mWd_-7U">
+    <div id="video-list">
+      <!-- <div class="video" data-videoId="lT40mWd_-7U">
         <div class="video-img">
           <img src="https://via.placeholder.com/300x300" alt="">
         </div>
@@ -58,11 +59,11 @@
         <div class="video-name">
           <h4>Eclaire Bright Illuminated Stylus Pen</h4>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
+      // This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
       tag.src = "https://www.youtube.com/iframe_api";
@@ -70,16 +71,42 @@
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
       // This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
+      // after the API code downloads.
       var player;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
           height: '390',
-          width: '640',
+          width: '100%',
           videoId: 'OhEnIp6beYI',
-          events: {
-          }
+          events: {}
         });
+      }
+
+      var Videos = [
+        {
+          name: "578 Eclaire Stars in Light 'Em Up!",
+          id: 'lT40mWd_-7U',
+          img: "https://via.placeholder.com/200x150"
+        },
+        {
+          name: "597 Moisant Stars in Light 'Em Up!",
+          id: 'mxPIAABeccw',
+          img: "https://via.placeholder.com/200x150"
+        }
+      ]
+
+      function createVideoMarkup() {
+        $("#video-list").add("div").addClass("video").data('videoId', Videos[i].id)
+        $(".video").add("div").addClass('video-img');
+        $(".video-img").append("<img src=" + Videos[i].img + ">");
+        $(".video").add("div").addClass("video-name");
+        $(".video-name").append('<h4>' + Videos[i].name + '</h4>');
+      }
+
+      function addVideos() {
+        for(i=0;i < Videos.length; i++) {
+          createVideoMarkup();
+        }
       }
 
       function createUrl(id) {
@@ -90,6 +117,8 @@
       function loadVideo(videoId) {
         player.loadVideoByUrl(createUrl(videoId));
       }
+
+      $(document).ready(addVideos());
 
       $(".video").click(function() {
         videoId = this.dataset.videoid;
