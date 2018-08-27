@@ -15,52 +15,7 @@
     <!-- The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
-    <div id="video-list">
-      <!-- <div class="video" data-videoId="lT40mWd_-7U">
-        <div class="video-img">
-          <img src="https://via.placeholder.com/300x300" alt="">
-        </div>
-        <div class="video-name">
-          <h4>578 Eclaire Stars in Light 'Em Up!</h4>
-        </div>
-      </div>
-
-      <div class="video" data-videoId='mxPIAABeccw'>
-        <div class="video-img">
-          <img src="https://via.placeholder.com/300x300" alt="">
-        </div>
-        <div class="video-name">
-          <h4>597 Moisant Stars in Light 'Em Up!</h4>
-        </div>
-      </div>
-
-      <div class="video" data-videoId='q_EMZjBgx7s'>
-        <div class="video-img">
-          <img src="https://via.placeholder.com/300x300" alt="">
-        </div>
-        <div class="video-name">
-          <h4>Santorini Torch</h4>
-        </div>
-      </div>
-
-      <div class="video" data-videoId='IdwH57G6SoE'>
-        <div class="video-img">
-          <img src="https://via.placeholder.com/300x300" alt="">
-        </div>
-        <div class="video-name">
-          <h4>The Matea Hybrid Ink Pen</h4>
-        </div>
-      </div>
-
-      <div class="video" data-videoId='jk4jSYcGkC4'>
-        <div class="video-img">
-          <img src="https://via.placeholder.com/300x300" alt="">
-        </div>
-        <div class="video-name">
-          <h4>Eclaire Bright Illuminated Stylus Pen</h4>
-        </div>
-      </div> -->
-    </div>
+    <div id="video-list"></div>
 
     <script>
       // This code loads the IFrame Player API code asynchronously.
@@ -76,7 +31,7 @@
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
           height: '390',
-          width: '100%',
+          width: '80%',
           videoId: 'OhEnIp6beYI',
           events: {}
         });
@@ -92,19 +47,32 @@
           name: "597 Moisant Stars in Light 'Em Up!",
           id: 'mxPIAABeccw',
           img: "https://via.placeholder.com/200x150"
+        },{
+          name: "Santorini Torch",
+          id: 'q_EMZjBgx7s',
+          img: "https://via.placeholder.com/200x150"
+        },{
+          name: "The Matea Hybrid Ink Pen",
+          id: 'IdwH57G6SoE',
+          img: "https://via.placeholder.com/200x150"
+        },{
+          name: "Eclaire Bright Illuminated Stylus Pen",
+          id: 'jk4jSYcGkC4',
+          img: "https://via.placeholder.com/200x150"
         }
       ]
 
       function createVideoMarkup() {
-        $("#video-list").add("div").addClass("video").data('videoId', Videos[i].id)
-        $(".video").add("div").addClass('video-img');
-        $(".video-img").append("<img src=" + Videos[i].img + ">");
-        $(".video").add("div").addClass("video-name");
-        $(".video-name").append('<h4>' + Videos[i].name + '</h4>');
+        var videoWrapper = $("<div class='video' data-videoId=" + Videos[i].id + "></div>")
+        var videoImg = $("<div class='video-img'> <img src=" + Videos[i].img + "> </div>");      
+        var videoName = $("<div class='video-name'> <h4>" + Videos[i].name + "</h4> </div>")
+        $(videoWrapper).append(videoImg);
+        $(videoWrapper).append(videoName);
+        $("#video-list").append(videoWrapper);
       }
 
       function addVideos() {
-        for(i=0;i < Videos.length; i++) {
+        for(i=0; i < Videos.length; i++) {
           createVideoMarkup();
         }
       }
