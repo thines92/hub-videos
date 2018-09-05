@@ -59,53 +59,22 @@
 
   <script type='text/template' class='template'>
     <div class="video" data-videoId="<%= item.contentDetails.videoId %>">
-      <a href="" class="video-img">
+      <a href="#" class="video-img">
         <img src="<%= item.snippet.thumbnails.medium.url %>">
       </a>
       <div class="video-title">
-        <h4><%= item.title %></h4>
+        <h4><%= item.snippet.title %></h4>
       </div>
     </div>
   </script>  
 
   <script>
 
-    
-
-
-
-    var Videos = [
-      {
-        title: "578 Eclaire Stars in Light 'Em Up!",
-        id: 'lT40mWd_-7U',
-        img: "http://img.youtube.com/vi/lT40mWd_-7U/0.jpg",
-        type: 'plastic'
-      },
-      {
-        title: "Santorini Torch",
-        id: 'q_EMZjBgx7s',
-        img: "http://img.youtube.com/vi/q_EMZjBgx7s/0.jpg",
-        type: 'plastic'
-      },
-      {
-        title: "The Matea Hybrid Ink Pen",
-        id: 'IdwH57G6SoE',
-        img: "http://img.youtube.com/vi/IdwH57G6SoE/0.jpg",
-        type: 'metal'
-      },
-      {
-        title: "Eclaire Bright Illuminated Stylus Pen",
-        id: 'jk4jSYcGkC4',
-        img: "http://img.youtube.com/vi/jk4jSYcGkC4/0.jpg",
-        type: 'metal'
-      }
-    ]
-
     var exampleVideos = [];
 
     console.log(exampleVideos);
 
-    var YTVideos = $.get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId=PLDMiO_JRdp9xm9w2gJsnjN-adK3hgsB8A&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag', function(data) {
+    $.get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId=PLDMiO_JRdp9xm9w2gJsnjN-adK3hgsB8A&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag', function(data) {
         $.each(data.items, function(index, item) {
           exampleVideos.push(item);
         })
@@ -125,71 +94,21 @@
     var player;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
+        host: 'http://www.youtube.com',
         height: '390',
         videoId: 'lT40mWd_-7U',
       });
     }
 
-    // var YTPlayer = {
-    //   filter: '',
-
-    //   // Creates a div for each video and appends it to #video-list
-    //   createVideoMarkup() {
-    //     var videoWrapper = $("<div class='video' data-videoId=" + Videos[i].id + "></div>")
-    //     var videoImg = $("<a class='video-img' href=''> <img src=" + Videos[i].img + "> </a>");      
-    //     var videoName = $("<div class='video-name'> <h4>" + Videos[i].title + "</h4> </div>")
-    //     $(videoWrapper).append(videoImg);
-    //     $(videoWrapper).append(videoName);
-    //     $("#video-list").append(videoWrapper);
-    //   },
-
-
-    //   addVideos: function() {
-    //     for(i=0; i < Videos.length; i++) {
-    //       YTPlayer.createVideoMarkup();
-    //     }
-    //   },
-
-      // createUrl: function(id) {
-      //   url = "https://www.youtube.com/v/" + id + "?version=3";
-      //   return url;
-      // },
-
-    //   
-
-    //   toggleVisible: function() {
-    //     $(this).toggleClass('hidden', this.isHidden());
-    //   },
-
-    //   isHidden: function() {
-    //     return ( // hidden cases only
-    //       (this.type === 'metal' && YTPlayer.filter === 'plastic')
-    //       || (this.type === 'plastic' && YTPlayer.filter === 'metal')
-    //     );
-    //   }
-
-    // };
-
-    // $(document).ready(YTPlayer.addVideos());
-
-    $(".video").click(function() {
-      videoId = this.dataset.videoid;
-      loadVideo(videoId);
-    });
     
-    // $("#plastic-filter").click(function() {
-    //   Videos.map(function() {
-    //     YTPlayer.toggleVisible();
-    //   })
-    // })
 
     function createUrl(id) {
-      url = "https://www.youtube.com/v/" + item.videoId + "?version=3";
+      url = "http://www.youtube.com/v/" + id + "?version=3";
       return url;
     };
 
     function loadVideo(videoId) {
-      YTPlayer.player.loadVideoByUrl(createUrl(videoId));
+      player.loadVideoById(videoId);
     }
 
     _.templateSettings.variable = 'item'; 
@@ -204,7 +123,10 @@
       });
     };
 
-    renderVideos(exampleVideos);
+    $('#video-list').on("click", '.video', function() {
+      var videoId = this.dataset.videoid;
+      loadVideo(videoId);
+    })
 
   </script>
   </body>
