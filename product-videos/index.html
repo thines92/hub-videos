@@ -52,85 +52,87 @@
       <div id="video-list"></div>
     </div>    
 
-    <script>
-      var Videos = [
-        {
-          name: "578 Eclaire Stars in Light 'Em Up!",
-          id: 'lT40mWd_-7U',
-          img: "http://img.youtube.com/vi/lT40mWd_-7U/0.jpg",
-          type: 'plastic'
-        },
-        {
-          name: "597 Moisant Stars in Light 'Em Up!",
-          id: 'mxPIAABeccw',
-          img: "http://img.youtube.com/vi/mxPIAABeccw/0.jpg",
-          type: 'metal'
-        },{
-          name: "Santorini Torch",
-          id: 'q_EMZjBgx7s',
-          img: "http://img.youtube.com/vi/q_EMZjBgx7s/0.jpg",
-          type: 'plastic'
-        },{
-          name: "The Matea Hybrid Ink Pen",
-          id: 'IdwH57G6SoE',
-          img: "http://img.youtube.com/vi/IdwH57G6SoE/0.jpg",
-          type: 'metal'
-        },{
-          name: "Eclaire Bright Illuminated Stylus Pen",
-          id: 'jk4jSYcGkC4',
-          img: "http://img.youtube.com/vi/jk4jSYcGkC4/0.jpg",
-          type: 'metal'
-        }
-      ]
+  <script>
+    var Videos = [
+      {
+        name: "578 Eclaire Stars in Light 'Em Up!",
+        id: 'lT40mWd_-7U',
+        img: "http://img.youtube.com/vi/lT40mWd_-7U/0.jpg",
+        type: 'plastic'
+      },
+      {
+        name: "597 Moisant Stars in Light 'Em Up!",
+        id: 'mxPIAABeccw',
+        img: "http://img.youtube.com/vi/mxPIAABeccw/0.jpg",
+        type: 'metal'
+      },{
+        name: "Santorini Torch",
+        id: 'q_EMZjBgx7s',
+        img: "http://img.youtube.com/vi/q_EMZjBgx7s/0.jpg",
+        type: 'plastic'
+      },{
+        name: "The Matea Hybrid Ink Pen",
+        id: 'IdwH57G6SoE',
+        img: "http://img.youtube.com/vi/IdwH57G6SoE/0.jpg",
+        type: 'metal'
+      },{
+        name: "Eclaire Bright Illuminated Stylus Pen",
+        id: 'jk4jSYcGkC4',
+        img: "http://img.youtube.com/vi/jk4jSYcGkC4/0.jpg",
+        type: 'metal'
+      }
+    ]
 
-      // This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
+    // This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
 
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      // This function creates an <iframe> (and YouTube player)
-      // after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
+    var YTPlayer = {
+      player: '',
+
+      onYouTubeIframeAPIReady: function() {
+        YouTube.player = new YT.Player('player', {
           height: '390',
           videoId: 'lT40mWd_-7U',
           events: {}
         });
-      }
+      },
 
-      function createVideoMarkup() {
+      createVideoMarkup() {
         var videoWrapper = $("<div class='video' data-videoId=" + Videos[i].id + "></div>")
         var videoImg = $("<a class='video-img' href=''> <img src=" + Videos[i].img + "> </a>");      
         var videoName = $("<div class='video-name'> <h4>" + Videos[i].name + "</h4> </div>")
         $(videoWrapper).append(videoImg);
         $(videoWrapper).append(videoName);
         $("#video-list").append(videoWrapper);
-      }
+      },
 
-      function addVideos() {
+      addVideos: function() {
         for(i=0; i < Videos.length; i++) {
-          createVideoMarkup();
+          YTPlayer.createVideoMarkup();
         }
-      }
+      },
 
-      function createUrl(id) {
+      createUrl: function(id) {
         url = "https://www.youtube.com/v/" + id + "?version=3";
         return url;
-      }
+      },
 
-      function loadVideo(videoId) {
+      loadVideo: function(videoId) {
         player.loadVideoByUrl(createUrl(videoId));
       }
 
-      $(document).ready(addVideos());
+    };
 
-      $(".video").click(function() {
-        videoId = this.dataset.videoid;
-        loadVideo(videoId);
-      });
-      </script>
+    $(document).ready(YTPlayer.addVideos());
+
+    $(".video").click(function() {
+      videoId = this.dataset.videoid;
+      loadVideo(videoId);
+    });
+  </script>
   </body>
 </html>
