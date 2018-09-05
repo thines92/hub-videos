@@ -133,8 +133,8 @@
 
       isHidden: function() {
         return ( // hidden cases only
-          (!isCompleted && app.TodoFilter === 'completed')
-          || (isCompleted && app.TodoFilter === 'active')
+          (this.type === 'metal' && YTPlayer.filter === 'plastic')
+          || (this.type === 'plastic' && YTPlayer.filter === 'metal')
         );
       }
 
@@ -146,6 +146,12 @@
       videoId = this.dataset.videoid;
       loadVideo(videoId);
     });
+    
+    $("#plastic-filter").click(function() {
+      Videos.map(function() {
+        YTPlayer.toggleVisible();
+      })
+    })
   </script>
   </body>
 </html>
