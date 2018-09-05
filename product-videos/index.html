@@ -94,8 +94,6 @@
       }
     ]
 
-    Window.localStorage = Videos;
-
     // This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
 
@@ -121,7 +119,7 @@
       createVideoMarkup() {
         var videoWrapper = $("<div class='video' data-videoId=" + Videos[i].id + "></div>")
         var videoImg = $("<a class='video-img' href=''> <img src=" + Videos[i].img + "> </a>");      
-        var videoName = $("<div class='video-name'> <h4>" + Videos[i].name + "</h4> </div>")
+        var videoName = $("<div class='video-name'> <h4>" + Videos[i].title + "</h4> </div>")
         $(videoWrapper).append(videoImg);
         $(videoWrapper).append(videoName);
         $("#video-list").append(videoWrapper);
