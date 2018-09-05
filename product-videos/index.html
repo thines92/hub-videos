@@ -3,21 +3,86 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
+    #player-wrapper {
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 750px;
+      margin-bottom: 30px;
+    }
+    #player {
+      width: 100%;
+    }
     #video-list {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       flex-wrap: wrap;
       text-align: center;
+    }
+    #video-list .video {
+      width: 50%;
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 350px;
+      padding-bottom: 0;
+      height: auto;
+    }
+    #video-list .video-img img {
+      width: 85%;
+      height: auto !important;
     }
   </style>
 </head>
   <body>
     <!-- The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player"></div>
+    <div id="player-wrapper">
+      <div id="player"></div>
+    </div>
 
-    <div id="video-list"></div>
+    <div id="filter">
+      <p>Filter videos</p>
+      <div class="filter-boxes">
+        <input type="radio" id="plastic-filter" name="pen">Plastic Pens
+        <input type="radio" id="metal-filter" name="pen">Metal Pens
+      </div>
+    </div>
+
+    <div class="videos-wrapper">
+      <h2 style="text-align: center">View our other videos!</h2>
+      <div id="video-list"></div>
+    </div>    
 
     <script>
+      var Videos = [
+        {
+          name: "578 Eclaire Stars in Light 'Em Up!",
+          id: 'lT40mWd_-7U',
+          img: "http://img.youtube.com/vi/lT40mWd_-7U/0.jpg",
+          type: 'plastic'
+        },
+        {
+          name: "597 Moisant Stars in Light 'Em Up!",
+          id: 'mxPIAABeccw',
+          img: "http://img.youtube.com/vi/mxPIAABeccw/0.jpg",
+          type: 'metal'
+        },{
+          name: "Santorini Torch",
+          id: 'q_EMZjBgx7s',
+          img: "http://img.youtube.com/vi/q_EMZjBgx7s/0.jpg",
+          type: 'plastic'
+        },{
+          name: "The Matea Hybrid Ink Pen",
+          id: 'IdwH57G6SoE',
+          img: "http://img.youtube.com/vi/IdwH57G6SoE/0.jpg",
+          type: 'metal'
+        },{
+          name: "Eclaire Bright Illuminated Stylus Pen",
+          id: 'jk4jSYcGkC4',
+          img: "http://img.youtube.com/vi/jk4jSYcGkC4/0.jpg",
+          type: 'metal'
+        }
+      ]
+
       // This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -31,40 +96,14 @@
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
           height: '390',
-          width: '80%',
-          videoId: 'OhEnIp6beYI',
+          videoId: 'lT40mWd_-7U',
           events: {}
         });
       }
 
-      var Videos = [
-        {
-          name: "578 Eclaire Stars in Light 'Em Up!",
-          id: 'lT40mWd_-7U',
-          img: "https://via.placeholder.com/200x150"
-        },
-        {
-          name: "597 Moisant Stars in Light 'Em Up!",
-          id: 'mxPIAABeccw',
-          img: "https://via.placeholder.com/200x150"
-        },{
-          name: "Santorini Torch",
-          id: 'q_EMZjBgx7s',
-          img: "https://via.placeholder.com/200x150"
-        },{
-          name: "The Matea Hybrid Ink Pen",
-          id: 'IdwH57G6SoE',
-          img: "https://via.placeholder.com/200x150"
-        },{
-          name: "Eclaire Bright Illuminated Stylus Pen",
-          id: 'jk4jSYcGkC4',
-          img: "https://via.placeholder.com/200x150"
-        }
-      ]
-
       function createVideoMarkup() {
         var videoWrapper = $("<div class='video' data-videoId=" + Videos[i].id + "></div>")
-        var videoImg = $("<div class='video-img'> <img src=" + Videos[i].img + "> </div>");      
+        var videoImg = $("<a class='video-img' href=''> <img src=" + Videos[i].img + "> </a>");      
         var videoName = $("<div class='video-name'> <h4>" + Videos[i].name + "</h4> </div>")
         $(videoWrapper).append(videoImg);
         $(videoWrapper).append(videoName);
@@ -92,28 +131,6 @@
         videoId = this.dataset.videoid;
         loadVideo(videoId);
       });
-
-      
-
-      // var yt_api_key = 'AIzaSyA39ywRN5C3E0LhlfqJtFXGk6lI1tDH2K4',
-      //     yt_video_id = 'jk4jSYcGkC4',
-      //     yt_snippet_endpoint = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + yt_video_id + "&key=" + yt_api_key;
-
-      // var jqxhr = $.getJSON(yt_snippet_endpoint)
-      //   .done(function(data) {
-      //     console.log("second success callback");
-      //     var title = getTitle(data);
-      //     // do something with title here
-      //     alert(title);
-      //   })
-      //   .fail(function() {
-      //     console.log("error, see network tab for response details");
-      //   });
-
-      // function getTitle(snippet_json_data){
-      //   var title = snippet_json_data.items[0].snippet.title;
-      //   return title;
-      // }
       </script>
   </body>
 </html>
