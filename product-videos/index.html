@@ -61,21 +61,18 @@
         type: 'plastic'
       },
       {
-        name: "597 Moisant Stars in Light 'Em Up!",
-        id: 'mxPIAABeccw',
-        img: "http://img.youtube.com/vi/mxPIAABeccw/0.jpg",
-        type: 'metal'
-      },{
         name: "Santorini Torch",
         id: 'q_EMZjBgx7s',
         img: "http://img.youtube.com/vi/q_EMZjBgx7s/0.jpg",
         type: 'plastic'
-      },{
+      },
+      {
         name: "The Matea Hybrid Ink Pen",
         id: 'IdwH57G6SoE',
         img: "http://img.youtube.com/vi/IdwH57G6SoE/0.jpg",
         type: 'metal'
-      },{
+      },
+      {
         name: "Eclaire Bright Illuminated Stylus Pen",
         id: 'jk4jSYcGkC4',
         img: "http://img.youtube.com/vi/jk4jSYcGkC4/0.jpg",
@@ -102,6 +99,7 @@
     }
 
     var YTPlayer = {
+      filter: '',
 
       // Creates a div for each video and appends it to #video-list
       createVideoMarkup() {
@@ -127,6 +125,17 @@
 
       loadVideo: function(videoId) {
         YTPlayer.player.loadVideoByUrl(createUrl(videoId));
+      },
+
+      toggleVisible: function() {
+        $(this).toggleClass('hidden', this.isHidden());
+      },
+
+      isHidden: function() {
+        return ( // hidden cases only
+          (!isCompleted && app.TodoFilter === 'completed')
+          || (isCompleted && app.TodoFilter === 'active')
+        );
       }
 
     };
