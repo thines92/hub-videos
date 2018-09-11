@@ -102,11 +102,6 @@
 
     var filter = '';
 
-    function createUrl(id) {
-      url = "http://www.youtube.com/v/" + id + "?version=3";
-      return url;
-    };
-
     function loadVideo(videoId) {
       player.loadVideoById(videoId);
     }
@@ -117,11 +112,13 @@
     }
 
     function filterVideos() {
-      _.each(exampleVideos, function() {
-        if(this.snippet.tags !== filter) {
-          $(this).css('hidden', 'true');
+      _.each(exampleVideos, function(element, index) {
+        if(element.id !== 'test') {
+          $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
+          console.log(element.contentDetails.videoId);
         }
-      })
+        console.log(element);
+      }, exampleVideos)
     }
 
     _.templateSettings.variable = 'item'; 
@@ -141,7 +138,9 @@
       loadVideo(videoId);
     })
 
-    $('#plastic-filter').on("click", '.video', setPlasticFilter());
+    $('#plastic-filter').on("click", function() {
+      filterVideos();
+    });
 
   </script>
   </body>
