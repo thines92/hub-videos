@@ -60,7 +60,7 @@
   <script type='text/template' class='template'>
     <div class="video" data-videoId="<%= item.contentDetails.videoId %>">
       <a href="#" class="video-img">
-        <img src="<%= item.snippet.thumbnails.medium.url %>">
+        <img src="<%= item.snippet.thumbnails.default.url %>">
       </a>
       <div class="video-title">
         <h4><%= item.snippet.title %></h4>
@@ -74,7 +74,7 @@
 
     console.log(exampleVideos);
 
-    $.get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId=PLDMiO_JRdp9xm9w2gJsnjN-adK3hgsB8A&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag', function(data) {
+    $.get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId=PLDMiO_JRdp9xJYFRGzIS5DQ91GCTvkJP0&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag', function(data) {
         $.each(data.items, function(index, item) {
           exampleVideos.push(item);
         })
@@ -96,11 +96,11 @@
       player = new YT.Player('player', {
         host: 'http://www.youtube.com',
         height: '390',
-        videoId: 'lT40mWd_-7U',
+        videoId: 'mxPIAABeccw',
       });
     }
 
-    
+    var filter = '';
 
     function createUrl(id) {
       url = "http://www.youtube.com/v/" + id + "?version=3";
@@ -109,6 +109,19 @@
 
     function loadVideo(videoId) {
       player.loadVideoById(videoId);
+    }
+
+    function setPlasticFilter() {
+      filter = "Plastic";
+      filterVideos();
+    }
+
+    function filterVideos() {
+      _.each(exampleVideos, function() {
+        if(this.snippet.tags !== filter) {
+          $(this).css('hidden', 'true');
+        }
+      })
     }
 
     _.templateSettings.variable = 'item'; 
@@ -127,6 +140,8 @@
       var videoId = this.dataset.videoid;
       loadVideo(videoId);
     })
+
+    $('#plastic-filter').on("click", '.video', setPlasticFilter());
 
   </script>
   </body>
