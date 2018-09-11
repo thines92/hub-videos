@@ -71,11 +71,12 @@
   <script>
 
     var exampleVideos = [];
-    var videoIds = []
+    var videoIds = [];
     var tags = [];
     
 
     console.log(exampleVideos);
+    console.log(tags);
 
     
 
@@ -90,8 +91,7 @@
 
       }
     }).done(function(data) {
-      var videoId = videoIds.join('%'); 
-      console.log(videoId);
+      var videoId = videoIds.join('%');
       renderVideos(exampleVideos); 
       getVideoTags();
       })
@@ -124,15 +124,30 @@
       $.ajax({
         url: 'https://www.googleapis.com/youtube/v3/videos?fields=items(snippet(tags))&part=snippet&id=' + videoIds + '&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag',
         success: function(data) {
-          _.each(data, function(val, i) {
-            _.each(val, function(val, i) {
-              tags.push(val.snippet.tags);
+          _.each(data.items, function(val, i) {
+            _.each(val.snippet, function(item, i) {
+              tags.push(item);
             })
-
-              console.log(tags);
           })
+          console.log(tags);
         }
-      });
+      }).done(function(data) {
+        embedTags(exampleVideos, tags);
+      })
+    }
+
+    function embedTags(videos, tags) {
+      for(i = 0; i < videos.length; i++) {
+        for(j = 0; j < tags[i].length; j++) {
+          console.log(videos[i].tags);
+          videos[i].tags += tags[i][j];
+          console.log(tags[i][j]);
+        }
+
+      console.log(videos);
+      }
+      // videos[0].tags = tags[0];
+      // console.log(videos[0]);
     }
 
     function loadVideo(videoId) {
