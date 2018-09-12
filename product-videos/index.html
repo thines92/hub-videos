@@ -130,7 +130,6 @@
         }
       }).done(function(data) {
         embedTags(videos, tags);
-        console.log(videos);
       })
     }
 
@@ -146,16 +145,6 @@
       player.loadVideoById(videoId);
     }
 
-    function setPlasticFilter() {
-      filter = "Plastic";
-      filterVideos();
-    }
-
-    function setMetalFilter() {
-      filter = "Metal";
-      filterVideos();
-    };
-
     function setFilter(target) {
       filter = target.dataset.filter;
       filterVideos();
@@ -164,10 +153,14 @@
     // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
       _.each(videos, function(element, index) {
-      if(element.tags.indexOf(filter) === -1) {
-        $('[data-videoId="' + element.contentDetails.videoId + '"]').toggle()
-      }
-      }, videos)
+        if(element.tags.indexOf(filter) === -1) {
+          toggleVisible(element);
+        }
+      })
+    }
+
+    function toggleVisible(element) {
+      $('[data-videoId="' + element.contentDetails.videoId + '"]').toggle()
     }
 
     // Prepends every video in an array.

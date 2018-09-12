@@ -1,0 +1,1 @@
+1: clicking on name of filter button runs the filter function. Should only run when clicking on checkbox.
