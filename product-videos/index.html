@@ -70,35 +70,10 @@
 
   <script>
 
-    var exampleVideos = [];
+    var videos = [];
     var videoIds = [];
     var tags = [];
-    
-
-    console.log(exampleVideos);
-    console.log(tags);
-
-    
-
-    $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=PLDMiO_JRdp9xJYFRGzIS5DQ91GCTvkJP0&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag',
-      data: {},
-      success: function(data) {
-        $.each(data.items, function(index, item) {
-          exampleVideos.push(item);
-          videoIds.push(item.contentDetails.videoId);
-        })
-
-      }
-    }).done(function(data) {
-      var videoId = videoIds.join('%');
-      renderVideos(exampleVideos); 
-      getVideoTags();
-      })
-
-    
-
-    
+    var filter = '';
 
     // This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
@@ -117,9 +92,25 @@
         videoId: 'mxPIAABeccw',
       });
     }
+    
+    // First Ajax call to get all videos in a playlist
+    $.ajax({
+      url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=PLDMiO_JRdp9xJYFRGzIS5DQ91GCTvkJP0&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag',
+      data: {},
+      success: function(data) {
+        $.each(data.items, function(index, item) {
+          videos.push(item);
+          videoIds.push(item.contentDetails.videoId);
+        })
 
-    var filter = '';
+      }
+    }).done(function(data) {
+      var videoId = videoIds.join('%');
+      renderVideos(videos); 
+      getVideoTags();
+      })
 
+    // Second Ajax call to get individual video's tags
     function getVideoTags() {
       $.ajax({
         url: 'https://www.googleapis.com/youtube/v3/videos?fields=items(snippet(tags))&part=snippet&id=' + videoIds + '&key=AIzaSyBTT5MRYUUBRCeMq41ducP6qPhYy5kQ1Ag',
@@ -132,14 +123,13 @@
           console.log(tags);
         }
       }).done(function(data) {
-        embedTags(exampleVideos, tags);
+        embedTags(videos, tags);
       })
     }
 
     function embedTags(videos, tags) {
       for(i = 0; i < videos.length; i++) {
-      videos[i].tags = tags[i].join(', ');
-      console.log(videos);
+        videos[i].tags = tags[i].join(', ');
       }
     }
 
@@ -153,13 +143,13 @@
     }
 
     function filterVideos() {
-      _.each(exampleVideos, function(element, index) {
+      _.each(videos, function(element, index) {
         if(element.id !== filter) {
           $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
           console.log(element.contentDetails.videoId);
         }
         console.log(element);
-      }, exampleVideos)
+      }, videos)
     }
 
     _.templateSettings.variable = 'item'; 
