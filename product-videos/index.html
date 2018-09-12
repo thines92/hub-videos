@@ -45,8 +45,8 @@
     <div id="filter">
       <p>Filter videos</p>
       <div class="filter-boxes">
-        <input type="radio" id="plastic-filter" name="pen">Plastic Pens
-        <input type="radio" id="metal-filter" name="pen">Metal Pens
+        <input type="checkbox" id="plastic-filter" name="pen">Plastic Pens
+        <input type="checkbox" id="metal-filter" name="pen">Metal Pens
       </div>
     </div>
 
@@ -153,14 +153,21 @@
     function setMetalFilter() {
       filter = "Metal";
       filterVideos();
-    }
+    };
 
     // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
+      // _.each(videos, function(element, index) {
+      // if(element.tags.indexOf(filter) === -1) {
+      //   $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
+      //   console.log(element.tags);
+      // }
+      //   console.log(element);
+      // }, videos)
       _.each(videos, function(element, index) {
       if(element.tags.indexOf(filter) === -1) {
-        $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
-        console.log(element.tags);
+        $('[data-videoId="' + element.contentDetails.videoId + '"]').toggle()
+        console.log(element);
       }
         console.log(element);
       }, videos)
