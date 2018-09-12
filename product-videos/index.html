@@ -74,7 +74,7 @@
     var videos = [];
     var videoIds = [];
     var tags = [];
-    var filter = '';
+    var filter = [];
 
     // This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
@@ -146,7 +146,15 @@
     }
 
     function setFilter(target) {
-      filter = target.dataset.filter;
+      filter = [];
+      var inputs = document.getElementsByTagName('input');
+      _.each(inputs, function(element) {
+        if($(element).prop('checked')) {
+          filter.push(element.dataset.filter);
+        }
+      })
+      // filter = target.dataset.filter;
+      // console.log($(target).prop('checked'));
       filterVideos();
     }
 
