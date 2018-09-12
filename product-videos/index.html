@@ -89,9 +89,15 @@
       player = new YT.Player('player', {
         host: 'http://www.youtube.com',
         height: '390',
-        videoId: 'mxPIAABeccw',
+        videoId: 'mxPIAABeccw'
       });
     }
+
+    // Connecting to the HTML template.
+    _.templateSettings.variable = 'item'; 
+    var template = _.template(
+      $('script.template').html()
+    );
     
     // First Ajax call to get all videos in a playlist
     $.ajax({
@@ -105,10 +111,10 @@
 
       }
     }).done(function(data) {
-      var videoId = videoIds.join('%');
-      renderVideos(videos); 
-      getVideoTags();
-      })
+        var videoId = videoIds.join('%');
+        renderVideos(videos); 
+        getVideoTags();
+    })
 
     // Second Ajax call to get individual video's tags
     function getVideoTags() {
@@ -120,19 +126,21 @@
               tags.push(item);
             })
           })
-          console.log(tags);
         }
       }).done(function(data) {
         embedTags(videos, tags);
+        console.log(videos);
       })
     }
 
+    // Attaches the approriate tags to each video.
     function embedTags(videos, tags) {
       for(i = 0; i < videos.length; i++) {
         videos[i].tags = tags[i].join(', ');
       }
     }
 
+    // Loads a video into the YouTube player.
     function loadVideo(videoId) {
       player.loadVideoById(videoId);
     }
@@ -142,22 +150,26 @@
       filterVideos();
     }
 
-    function filterVideos() {
+    function filterVideos(arr) {
+      // _.each(videos, function(element, index) {
+      //   if(element.id !== filter) {
+      //     $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
+      //     console.log(element.contentDetails.videoId);
+      //   }
+
+
       _.each(videos, function(element, index) {
-        if(element.id !== filter) {
-          $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
-          console.log(element.contentDetails.videoId);
-        }
+      if(element.tags.indexOf(filter) === -1) {
+        $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
+        console.log(element.tags);
+      }
         console.log(element);
       }, videos)
     }
 
-    _.templateSettings.variable = 'item'; 
+    
 
-    var template = _.template(
-      $('script.template').html()
-    );
-
+    // Prepends every video in an array.
     var renderVideos = function(arr) {
       _.each(arr, function(elem) {
         $('#video-list').prepend(template(elem));
@@ -170,7 +182,7 @@
     })
 
     $('#plastic-filter').on("click", function() {
-      filterVideos();
+      setPlasticFilter();
     });
 
   </script>
