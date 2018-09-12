@@ -175,7 +175,11 @@
       loadVideo(videoId);
     })
 
-    $('#filter').on("click", $('input[name="filter"]'), function(e) {
+    // $('#filter').on("click", $('input[name="filter"]'), function(e) {
+    //   setFilter(e.target);
+    // });
+
+    $('#filter').on("change", $('input[name="filter"]'), function(e) {
       setFilter(e.target);
     });
 
