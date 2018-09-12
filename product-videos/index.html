@@ -150,14 +150,13 @@
       filterVideos();
     }
 
+    function setMetalFilter() {
+      filter = "Metal";
+      filterVideos();
+    }
+
+    // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
-      // _.each(videos, function(element, index) {
-      //   if(element.id !== filter) {
-      //     $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
-      //     console.log(element.contentDetails.videoId);
-      //   }
-
-
       _.each(videos, function(element, index) {
       if(element.tags.indexOf(filter) === -1) {
         $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
@@ -166,8 +165,6 @@
         console.log(element);
       }, videos)
     }
-
-    
 
     // Prepends every video in an array.
     var renderVideos = function(arr) {
@@ -183,6 +180,10 @@
 
     $('#plastic-filter').on("click", function() {
       setPlasticFilter();
+    });
+
+    $('#metal-filter').on("click", function() {
+      setMetalFilter();
     });
 
   </script>
