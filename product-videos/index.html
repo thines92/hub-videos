@@ -45,8 +45,9 @@
     <div id="filter">
       <p>Filter videos</p>
       <div class="filter-boxes">
-        <input type="checkbox" id="plastic-filter" name="pen">Plastic Pens
-        <input type="checkbox" id="metal-filter" name="pen">Metal Pens
+        <!-- data-filter values MUST be capitalized -->
+        <input type="checkbox" id="plastic-filter" name="filter" data-filter="Plastic">Plastic Pens
+        <input type="checkbox" id="metal-filter" name="filter" data-filter="Metal">Metal Pens
       </div>
     </div>
 
@@ -155,21 +156,17 @@
       filterVideos();
     };
 
+    function setFilter(target) {
+      filter = target.dataset.filter;
+      filterVideos();
+    }
+
     // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
-      // _.each(videos, function(element, index) {
-      // if(element.tags.indexOf(filter) === -1) {
-      //   $('[data-videoId="' + element.contentDetails.videoId + '"]').hide();
-      //   console.log(element.tags);
-      // }
-      //   console.log(element);
-      // }, videos)
       _.each(videos, function(element, index) {
       if(element.tags.indexOf(filter) === -1) {
         $('[data-videoId="' + element.contentDetails.videoId + '"]').toggle()
-        console.log(element);
       }
-        console.log(element);
       }, videos)
     }
 
@@ -185,12 +182,8 @@
       loadVideo(videoId);
     })
 
-    $('#plastic-filter').on("click", function() {
-      setPlasticFilter();
-    });
-
-    $('#metal-filter').on("click", function() {
-      setMetalFilter();
+    $('#filter').on("click", $('input[name="filter"]'), function(e) {
+      setFilter(e.target);
     });
 
   </script>
