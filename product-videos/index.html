@@ -166,16 +166,20 @@
     function setFilter(target) {
       filter = [];
       var inputs = document.getElementsByTagName('input');
+
       _.each(inputs, function(element) {
-        if($(element).prop('checked')) {
-          filter.push(element.dataset.filtertype);
-        } 
-        else if ((!$(element).prop('checked')) && filter.indexOf(element.dataset.filter) > -1)
-        {
-          index = filter.indexOf(element.dataset.filtertype);
+        var filterType = element.dataset.filtertype;
+        var checkedBox = $(element).prop('checked');
+
+        if(checkedBox) {
+          filter.push(filterType);
+        } else if ((!checkedBox) && filter.indexOf(filterType) > -1) {
+          index = filter.indexOf(filterType);
           filter.splice(index, 1);
         }
+        
       })
+
       filterVideos();
     }
 
