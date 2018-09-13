@@ -27,6 +27,7 @@
     #video-list {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       text-align: center;
     }
     #video-list .video {
@@ -47,7 +48,6 @@
     
 
     <div class="videos-wrapper">
-      <h2 style="text-align: center">View our other videos!</h2>
       <div class="container-fluid">
         <div class="row">
           <div class="sidebar col-sm-2 col-xs">
@@ -60,9 +60,15 @@
               </div>
             </div>
           </div>
-          <div id="video-list" class="col-sm-8">
-            
+          <div class="content col-sm-8">
+            <div class="video-list-header col">
+              <h2 style="text-align: center">View our other videos!</h2>
+            </div>
+            <div id="video-list" class="col">
+              
+            </div>
           </div>
+          
         </div>
       </div>
     </div>    
@@ -208,9 +214,8 @@
 
     // Prepends every video in an array.
     var renderVideos = function(arr) {
-      $('#video-list').html('');
       _.each(arr, function(elem) {
-        $('#video-list').prepend(template(elem));
+        $('#video-list').append(template(elem));
       });
     };
 
