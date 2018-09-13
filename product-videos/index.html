@@ -46,8 +46,8 @@
       <p>Filter videos</p>
       <div class="filter-boxes">
         <!-- data-filter values MUST be capitalized -->
-        <input type="checkbox" id="plastic-filter" name="filter" data-filter-type="Plastic">Plastic Pens
-        <input type="checkbox" id="metal-filter" name="filter" data-filter-type="Metal">Metal Pens
+        <input type="checkbox" id="plastic-filter" name="filter" data-filtertype="Plastic">Plastic Pens
+        <input type="checkbox" id="metal-filter" name="filter" data-filtertype="Metal">Metal Pens
       </div>
     </div>
 
@@ -150,9 +150,9 @@
       var inputs = document.getElementsByTagName('input');
       _.each(inputs, function(element) {
         if($(element).prop('checked')) {
-          filter.push(element.dataset.filter-type);
+          filter.push(element.dataset.filtertype);
         } else if ((!$(element).prop('checked')) && filter.indexOf(element.dataset.filter) > -1){
-          index = filter.indexOf(element.dataset.filter-type);
+          index = filter.indexOf(element.dataset.filtertype);
           filter.splice(index, 1);
         }
       })
