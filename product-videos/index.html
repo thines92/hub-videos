@@ -36,6 +36,8 @@
     }
     #video-list img {
       width: 75%;
+      box-shadow: 0 10px 6px -6px black;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -160,6 +162,7 @@
       player.loadVideoById(videoId);
     }
 
+    // Resets the filter and then adds a filter for each box that is checked
     function setFilter(target) {
       filter = [];
       var inputs = document.getElementsByTagName('input');
