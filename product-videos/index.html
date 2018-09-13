@@ -174,10 +174,10 @@
         if(checkedBox) {
           filter.push(filterType);
         } else if ((!checkedBox) && filter.indexOf(filterType) > -1) {
-          index = filter.indexOf(filterType);
+          var index = filter.indexOf(filterType);
           filter.splice(index, 1);
         }
-        
+
       })
 
       filterVideos();
@@ -185,13 +185,10 @@
 
     // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
-      if(filter.length > 0) {
-        isHidden();
-      } else {
-        renderVideos(videos);
-      }
+      isHidden();
     }
 
+    // Calls hasFilter and toggleVisible to determine what videos should be hidden/shown.
     function isHidden() {
       _.each(videos, function(element, index) {
         hasFilter(element);
@@ -199,20 +196,27 @@
       })
     }
 
+    // Checks each video for a tag/filter. If a video doesn't have the tag
+    // hide the video. If it does have the tag, show it. If no filter, show the video.
     function hasFilter(element) {
-      for(i = 0; i < filter.length; i++) {
-        if(element.tags.indexOf(filter[i]) == -1) {
-          element.isHidden = true;
-        } else {
-          element.isHidden = false;
-          return;
+      if(filter.length > 0) {
+        for(i = 0; i < filter.length; i++) {
+          if(element.tags.indexOf(filter[i]) == -1) {
+            element.isHidden = true;
+          } else {
+            element.isHidden = false;
+            return;
+          }
         }
-      } 
+      } else {
+        element.isHidden = false;
+      }
     }
 
+    // Checks a video to check the isHidden property. If true, hide video. If false, show video.
     function toggleVisible(element) {
       var item = $('[data-videoId="' + element.contentDetails.videoId + '"]');
-      if(element.isHidden) {
+      if(element.isHidden == true) {
         item.hide();
       } else {
         item.show();
