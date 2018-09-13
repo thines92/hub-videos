@@ -214,6 +214,7 @@
 
     // Prepends every video in an array.
     var renderVideos = function(arr) {
+      $('#video-list').html('');
       _.each(arr, function(elem) {
         $('#video-list').append(template(elem));
       });
