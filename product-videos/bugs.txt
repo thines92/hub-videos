@@ -1,1 +1,1 @@
-1: clicking on both filters at once does not work properly.
+: Filter videos dropdown menu does not line up with the text.
