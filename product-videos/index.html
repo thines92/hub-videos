@@ -151,7 +151,9 @@
       _.each(inputs, function(element) {
         if($(element).prop('checked')) {
           filter.push(element.dataset.filtertype);
-        } else if ((!$(element).prop('checked')) && filter.indexOf(element.dataset.filter) > -1){
+        } 
+        else if ((!$(element).prop('checked')) && filter.indexOf(element.dataset.filter) > -1)
+        {
           index = filter.indexOf(element.dataset.filtertype);
           filter.splice(index, 1);
         }
@@ -170,13 +172,26 @@
 
     function isHidden() {
       _.each(videos, function(element, index) {
-        if(element.tags.indexOf(filter) === -1) {
+        // if(element.tags.indexOf(filter) === -1) {
+        // if(!hasFilter(element)) {
+        //   element.isHidden = true;
+        // } else {
+        //   element.isHidden = false;
+        // }
+        hasFilter(element);
+        toggleVisible(element);
+      })
+    }
+
+    function hasFilter(element) {
+      for(i = 0; i < filter.length; i++) {
+        if(element.tags.indexOf(filter[i]) == -1) {
           element.isHidden = true;
         } else {
           element.isHidden = false;
+          return;
         }
-        toggleVisible(element);
-      })
+      } 
     }
 
     function toggleVisible(element) {
