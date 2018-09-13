@@ -146,11 +146,13 @@
     }
 
     function setFilter(target) {
-      filter = [];
       var inputs = document.getElementsByTagName('input');
       _.each(inputs, function(element) {
         if($(element).prop('checked')) {
           filter.push(element.dataset.filter);
+        } else if ((!$(element).prop('checked')) && filter.indexOf(element.dataset.filter) > -1){
+          index = filter.indexOf(element.dataset.filter);
+          filter.splice(index, 1);
         }
       })
       // filter = target.dataset.filter;
@@ -160,11 +162,15 @@
 
     // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
-      _.each(videos, function(element, index) {
-        if(element.tags.indexOf(filter) === -1) {
-          toggleVisible(element);
-        }
-      })
+      if(filter.length > 0) {
+        _.each(videos, function(element, index) {
+          if(element.tags.indexOf(filter) === -1) {
+            toggleVisible(element);
+          }
+        })
+      } else {
+        renderVideos(videos);
+      }
     }
 
     function toggleVisible(element) {
@@ -173,6 +179,7 @@
 
     // Prepends every video in an array.
     var renderVideos = function(arr) {
+      $('#video-list').html('');
       _.each(arr, function(elem) {
         $('#video-list').prepend(template(elem));
       });
