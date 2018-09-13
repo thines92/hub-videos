@@ -146,6 +146,7 @@
     }
 
     function setFilter(target) {
+      filter = [];
       var inputs = document.getElementsByTagName('input');
       _.each(inputs, function(element) {
         if($(element).prop('checked')) {
@@ -163,18 +164,30 @@
     // Filters videos using YouTube video tags as filters.
     function filterVideos(arr) {
       if(filter.length > 0) {
-        _.each(videos, function(element, index) {
-          if(element.tags.indexOf(filter) === -1) {
-            toggleVisible(element);
-          }
-        })
+        isHidden();
       } else {
         renderVideos(videos);
       }
     }
 
+    function isHidden() {
+      _.each(videos, function(element, index) {
+        if(element.tags.indexOf(filter) === -1) {
+          element.isHidden = true;
+        } else {
+          element.isHidden = false;
+        }
+        toggleVisible(element);
+      })
+    }
+
     function toggleVisible(element) {
-      $('[data-videoId="' + element.contentDetails.videoId + '"]').toggle()
+      var item = $('[data-videoId="' + element.contentDetails.videoId + '"]');
+      if(element.isHidden) {
+        item.hide();
+      } else {
+        item.show();
+      }
     }
 
     // Prepends every video in an array.
